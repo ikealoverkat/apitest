@@ -1,20 +1,19 @@
 const express = require("express");
 const app = express()
 
-
 app.get("/stats", async (req, res) => {
-    try { const apiKey = `4ecc7208-ef8d-45af-8b6c-ceca0c88dcdb`;
+    try { 
+        const email = req.query.email;
+        console.log("recieved email: ", email)
 
-        const response = await fetch(`https://hackatime.hackclub.com/api/hackatime/v1/users/current/statusbar/today`, {
-                headers: { "Authorization": `Bearer ${apiKey}`} 
-            });
+        const response = await fetch(`https://hackatime.hackclub.com/api/v1/users/lookup_email/${email}`);
             
             const text = await response.text(); // read raw text
-            console.log("API returned:", text)
+            console.log("API returned:", text);
 
         if (!response.ok) {
-            return res.status(response.status).send(text);
-        } 
+            return res.send("error: invalid email!");
+        }
 
         let data;
         
