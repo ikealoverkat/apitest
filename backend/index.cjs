@@ -1,16 +1,18 @@
 const express = require("express");
 const app = express()
+const dayjs = require('dayjs')
+dayjs().format()
 
 
 app.get("/stats", async (req, res) => {
-    try { const apiKey = `8aab5fa1-1971-4a31-b913-f95fe8fde5aa`;
-
-        const response = await fetch(`https://hackatime.hackclub.com/api/hackatime/v1/users/current/statusbar/today`, {
-                headers: { "Authorization": `Bearer ${apiKey}`} 
-            });
-            
+    try { const slack_id = req.query.slack_id;
+        const startofday = dayjs().startOf('day');
+        const endofday = dayjs().endOf('day');
+        const response = await fetch(`https://hackatime.hackclub.com/api/v1/users/${slack_id}/stats?start_date=${startofday}&end_date=${endofday}`);
+        
             const text = await response.text(); // read raw text
             console.log("API returned:", text)
+            console.log(startofday + " " + endofday);
 
         if (!response.ok) {
             return res.status(response.status).send(text);
