@@ -3,9 +3,9 @@ const app = express()
 
 
 app.get("/stats", async (req, res) => {
-  try { const apiKey = "4ecc7208-ef8d-45af-8b6c-ceca0c88dcdb";
+    try { const apiKey = `4ecc7208-ef8d-45af-8b6c-ceca0c88dcdb`;
 
-        const response = await fetch("/api/v1/users/kat/stats ", {
+        const response = await fetch(`https://hackatime.hackclub.com/api/hackatime/v1/users/current/statusbar/today`, {
                 headers: { "Authorization": `Bearer ${apiKey}`} 
             });
             
@@ -28,8 +28,9 @@ app.get("/stats", async (req, res) => {
     }
         
     catch (error) {
+        console.error(error);
+        console.log(error); // log full error
         res.status(500).json({ error: "Failed to fetch stats" });
-        console.log(error);
     }
 });
 
