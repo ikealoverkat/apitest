@@ -5,7 +5,7 @@ const app = express()
 app.get("/stats", async (req, res) => {
   try { const apiKey = "4ecc7208-ef8d-45af-8b6c-ceca0c88dcdb";
 
-        const response = await fetch("https://hackatime.hackclub.com/api/v1/stats", {
+        const response = await fetch("/api/v1/users/kat/stats ", {
                 headers: { "Authorization": `Bearer ${apiKey}`} 
             });
             
